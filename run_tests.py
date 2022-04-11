@@ -5,20 +5,20 @@ import sys
 def run_tests():
     result = subprocess.run(['python', '-m', 'unittest'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     errors = result.stderr.decode('utf-8')
-
-    if "FAILED" in errors:
-        print(errors)
-        sys.exit(1)
-
     output = result.stdout.decode('utf-8')
 
     lines = output.split("\n")
 
     failed_lines = list(filter(has_failed, lines))
 
-    if len(failed_lines) > 0:
-        error_output = "\n".join(failed_lines)
-        print(error_output)
+    if len(failed_lines) > 0 or "FAILED" in errors:
+        if "FAILED" in errors:
+            print(errors)
+
+        if len(failed_lines) > 0:
+            error_output = "\n".join(failed_lines)
+            print(error_output)
+
         sys.exit(1)
 
     success_output = "\n".join(lines)
