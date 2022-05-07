@@ -12,6 +12,8 @@ def run_tests():
     failed_lines = list(filter(has_failed, lines))
 
     if len(failed_lines) > 0 or "FAILED" in errors:
+        print(output)
+
         if "FAILED" in errors:
             print(errors)
 
